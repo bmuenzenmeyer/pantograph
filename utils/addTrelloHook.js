@@ -4,13 +4,13 @@ const {
   TRELLO_LIST_ID,
   TRELLO_TOKEN,
   TRELLO_KEY,
-  npm_config_url } = process.env;
+  NETLIFY_HOOK } = process.env;
 
 const fetch = require('node-fetch');
 
 const body = {
   description: "Netlify build hook",
-  callbackURL: npm_config_url,
+  callbackURL: NETLIFY_HOOK,
   idModel: TRELLO_LIST_ID
 }
 
