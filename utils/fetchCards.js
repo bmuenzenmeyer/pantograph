@@ -1,32 +1,29 @@
 const fetch = require("node-fetch")
 
-// Get any environment variables we need
-// With public fallbacks for happier onboarding
 require("dotenv").config()
 
 const {
   TRELLO_BOARD_ID,
   TRELLO_API_BOARD_CARDS,
-  TRELLO_LIST_ID,
   TRELLO_TOKEN,
   TRELLO_KEY,
   BRANCH,
 } = process.env
 
-const trelloBoardCardsUrl = TRELLO_API_BOARD_CARDS.replace(
+const trelloBoardUrl = TRELLO_API_BOARD_CARDS.replace(
   "TRELLO_BOARD_ID",
   TRELLO_BOARD_ID
 )
 
-module.exports = () => {
+module.exports = (listID) => {
   // Fetch the JSON data about this board
-  return fetch(`${trelloBoardCardsUrl}?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
+  return fetch(`${trelloBoardUrl}?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
     .then((res) => res.json())
     .then((json) => {
       // Just focus on the cards which are in the list we want
       // and do not have a closed status
       let contentCards = json.filter((card) => {
-        return card.idList == TRELLO_LIST_ID && !card.closed
+        return card.idList == listID && !card.closed
       })
 
       // only include cards labelled with "live" or with

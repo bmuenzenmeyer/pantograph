@@ -1,13 +1,18 @@
 // Get any environment variables we need
 require("dotenv").config()
-const { TRELLO_LIST_ID, TRELLO_TOKEN, TRELLO_KEY, NETLIFY_HOOK } = process.env
+const {
+  TRELLO_HOME_LIST_ID,
+  TRELLO_TOKEN,
+  TRELLO_KEY,
+  NETLIFY_HOOK,
+} = process.env
 
 const fetch = require("node-fetch")
 
 const body = {
   description: "Netlify build hook",
   callbackURL: NETLIFY_HOOK,
-  idModel: TRELLO_LIST_ID,
+  idModel: TRELLO_HOME_LIST_ID,
 }
 
 fetch(
