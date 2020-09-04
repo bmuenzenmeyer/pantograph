@@ -15,6 +15,13 @@
   <div class="tint">
     <header>
       <h1>{{site.name}}!</h1>
+      <nav>
+      <ul>
+        {%- for page in content -%}
+          <li><a href="{{ page.url | url }}">{{ page.url | toHumanUrl }}</a></li>
+        {%- endfor -%}
+      </ul>
+      </nav>
       <p>
         This site is populated with content from <a href="{{ site.trello_board }}">this Trello board</a>. Every deployment pulls the  content from the Trello API and generates the site's HTML at build time on <a href="https://netlify.com">Netlify</a>.
       </p>
