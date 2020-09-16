@@ -2,6 +2,8 @@
 
 > Adapted from the MIT source of https://github.com/philhawksworth/hello-trello - README content retained [below](#original-readme). All credit to Phil Hawksworth for gluing these concepts together into a way that resonated with me.
 
+![](logo.png)
+
 [Pantograph](https://en.wikipedia.org/wiki/Pantograph) is an opinionated [jamstack starter](https://jamstack.org/) built via [11ty](https://www.11ty.dev/) for use in small projects.
 
 Maybe someday I'll use a real CMS.
