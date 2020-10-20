@@ -15,7 +15,16 @@ module.exports = function (eleventyConfig) {
     return new CleanCSS({}).minify(code).styles
   })
 
-  eleventyConfig.addNunjucksFilter("toHumanUrl", (v) => v.replace(/\//g, ''));
+  eleventyConfig.addNunjucksFilter("toHumanUrl", (v) => v.replace(/\//g, ""))
+
+  // Unsorted items (in whatever order they were added)
+  eleventyConfig.addCollection("allMyContent", function (collectionApi) {
+    const d = collectionApi.getAll()
+    d.forEach((i) => {
+      console.log(i)
+    })
+    return d
+  })
 
   // Where are my things?
   return {

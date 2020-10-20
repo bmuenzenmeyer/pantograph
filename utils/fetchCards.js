@@ -15,6 +15,22 @@ const trelloBoardUrl = TRELLO_API_BOARD_CARDS.replace(
   TRELLO_BOARD_ID
 )
 
+const extractProperty = (card, propName) => {
+  const label = card.labels.filter((l) => {
+    // console.log(l)
+    return l.name.toLowerCase().startsWith(`${propName}:`)
+  })
+
+  if (label.length) {
+    if (propName === "tag") {
+      card[`tags`] = [label[0].name.split(":")[1]]
+    } else {
+      card[`tags`] = []
+      card[`PANTOGRAPH_${propName}`] = label[0].name.split(":")[1]
+    }
+  }
+}
+
 module.exports = (listID) => {
   // Fetch the JSON data about this board
   return fetch(`${trelloBoardUrl}?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
@@ -44,6 +60,8 @@ module.exports = (listID) => {
             card.desc +
             `\n![${card.name}](${card.attachments[0].url} '${card.name}')`
         }
+
+        extractProperty(card, "tag")
       })
 
       // return our data

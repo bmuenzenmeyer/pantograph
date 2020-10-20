@@ -1,0 +1,15 @@
+---
+pagination:
+  data: tags
+  size: 1
+  alias: tag
+  filter:
+    - all
+permalink: /tags/{{ tag }}/
+---
+<h1>Tagged “{{ tag }}”</h1>
+
+{% set taglist = tags[ tag ] %}
+{% for post in taglist | reverse %}
+  <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+{% endfor %}
