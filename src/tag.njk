@@ -5,11 +5,16 @@ pagination:
   alias: tag
   filter:
     - all
-permalink: /tags/{{ tag }}/
+permalink: /tags/{{ tag.name }}/
 ---
-<h1>Tagged “{{ tag }}”</h1>
+<h1>Tagged “{{ tag.name }}”</h1>
 
-{% set taglist = tags[ tag ] %}
-{% for post in taglist | reverse %}
-  <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+{% for t in tags | reverse %}
+
+  {% if tag.name == t.name  %}
+    {% for card in t.cards | reverse %}
+      <a href="../../{{card.name | slug }}">{{ card.name }}</a>
+    {% endfor %}
+  {% endif %}
+
 {% endfor %}

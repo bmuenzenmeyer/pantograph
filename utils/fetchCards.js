@@ -23,7 +23,7 @@ const extractProperty = (card, propName) => {
 
   if (label.length) {
     if (propName === "tag") {
-      card[`tags`] = [label[0].name.split(":")[1]]
+      card[`tags`] = label.map(l => l.name.split(':')[1])
     } else {
       card[`tags`] = []
       card[`PANTOGRAPH_${propName}`] = label[0].name.split(":")[1]
@@ -52,7 +52,7 @@ module.exports = (listID) => {
         ).length
       })
 
-      // If a card has an attachment, add it as an image in the descriotion markdown
+      // If a card has an attachment, add it as an image in the description markdown
       contextCards.forEach((card) => {
         if (card.attachments && card.attachments.length) {
           card.name = ""
