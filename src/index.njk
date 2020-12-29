@@ -20,6 +20,11 @@
         {%- for page in content -%}
           <li><a href="{{ page.url | url }}">{{ page.url | toHumanUrl }}</a></li>
         {%- endfor -%}
+
+        {% for tag in tags %}
+          <li>All posts tagged <a href="/tags/{{tag.name}}">{{tag.name}}</a></li>
+        {% endfor %}
+
       </ul>
       </nav>
       <p>

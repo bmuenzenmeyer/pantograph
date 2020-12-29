@@ -15,7 +15,7 @@ module.exports = function (eleventyConfig) {
     return new CleanCSS({}).minify(code).styles
   })
 
-  eleventyConfig.addNunjucksFilter("toHumanUrl", (v) => v.replace(/\//g, ''));
+  eleventyConfig.addNunjucksFilter("toHumanUrl", (v) => v.replace(/\//g, ""))
 
   // Where are my things?
   return {
