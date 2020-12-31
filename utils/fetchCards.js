@@ -18,18 +18,23 @@ const trelloBoardUrl = TRELLO_API_BOARD_CARDS.replace(
 
 const extractProperty = (card, propName) => {
   const label = card.labels.filter((l) => {
-    // console.log(l)
+    // console.log(20, l)
     return l.name.toLowerCase().startsWith(`${propName}:`)
   })
+
+  // console.log(24, card.name, label, propName)
 
   if (label.length) {
     if (propName === "tag") {
       card[`tags`] = label.map(l => l.name.split(':')[1])
     } else {
-      card[`tags`] = []
+      if (!card.tags) {
+        card[`tags`] = []
+      }
       card[`PANTOGRAPH_${propName}`] = label[0].name.split(":")[1]
     }
   }
+  // console.log(35, card)
 }
 
 module.exports = async (listID) => {
@@ -71,10 +76,10 @@ module.exports = async (listID) => {
         `\n![${card.name}](${res[0].url} '${card.name}')`
       })
 
-
     }
 
     extractProperty(card, "tag")
+    extractProperty(card, "date")
 
   })
 

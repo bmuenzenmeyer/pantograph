@@ -12,7 +12,7 @@ Maybe someday I'll use a real CMS.
 
 - Trello Home Page from a List
 - Trello Bespoke Pages
-- TODO: Tags and Tag Pages from `tag: foo` trello labels
+- Tags and Tag Pages from `tag: foo` Trello labels
 - TODO: Date from `date: MM/DD/YYYY` trello labels
 
 ---
