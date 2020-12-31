@@ -12,8 +12,8 @@ Maybe someday I'll use a real CMS.
 
 - Trello Home Page from a List
 - Trello Bespoke Pages
-- Tags and Tag Pages from `tag: foo` Trello labels
-- TODO: Date from `date: MM/DD/YYYY` trello labels
+- Tags and Tag Pages from `tag:foo` Trello labels
+- Date from `date:YYYY-MM-DD` Trello labels
 
 ---
 
