@@ -4,6 +4,6 @@ const fetchCards = require("../../utils/fetchCards")
 
 const { TRELLO_HOME_LIST_ID } = process.env
 
-module.exports = () => {
-  return fetchCards(TRELLO_HOME_LIST_ID)
+module.exports = async () => {
+  return await fetchCards(TRELLO_HOME_LIST_ID)
 }
