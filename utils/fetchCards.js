@@ -62,8 +62,6 @@ module.exports = async (listID) => {
   await contextCards.forEach(async (card) => {
 
     if(card.badges.attachments) {
-      console.log('hi')
-
       const trelloAttachmentsUrl = TRELLO_API_ATTACHMENTS.replace("TRELLO_CARD_ID", card.id)
 
       await fetch(`${trelloAttachmentsUrl}?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)

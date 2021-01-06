@@ -1,4 +1,9 @@
+const pluginBetterSlug = require("@borisschapira/eleventy-plugin-better-slug")
+
 module.exports = function (eleventyConfig) {
+  // plugins
+  eleventyConfig.addPlugin(pluginBetterSlug)
+
   // A handy markdown shortcode for blocks of markdown
   // coming from our data sources
   const markdownIt = require("markdown-it")
