@@ -26,7 +26,7 @@ const extractProperty = (card, propName) => {
 
   if (label.length) {
     if (propName === "tag") {
-      card[`tags`] = label.map(l => l.name.split(':')[1])
+      card[`tags`] = label.map((l) => l.name.split(":")[1])
     } else {
       if (!card.tags) {
         card[`tags`] = []
@@ -37,11 +37,33 @@ const extractProperty = (card, propName) => {
   // console.log(35, card)
 }
 
+const findImage = async (card) => {
+  if (card.badges.attachments) {
+    const trelloAttachmentsUrl = TRELLO_API_ATTACHMENTS.replace(
+      "TRELLO_CARD_ID",
+      card.id
+    )
+
+    const rawRes = await fetch(
+      `${trelloAttachmentsUrl}?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`
+    )
+
+    const res = await rawRes.json()
+    card.desc = card.desc + `\n![${card.name}](${res[0].url} '${card.name}')`
+    card.PANTOGRAPH_IMAGE = res[0].url
+    return card
+  } else {
+    return card
+  }
+}
+
 module.exports = async (listID) => {
   // Fetch the JSON data about this board
-  const response = await fetch(`${trelloBoardUrl}?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
+  const response = await fetch(
+    `${trelloBoardUrl}?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`
+  )
   const json = await response.json()
-  
+
   // Just focus on the cards which are in the list we want
   // and do not have a closed status
   let contentCards = json.filter((card) => {
@@ -53,34 +75,21 @@ module.exports = async (listID) => {
   let contextCards = contentCards.filter((card) => {
     return card.labels.filter(
       (label) =>
-        label.name.toLowerCase() == "live" ||
-        label.name.toLowerCase() == BRANCH
+        label.name.toLowerCase() == "live" || label.name.toLowerCase() == BRANCH
     ).length
   })
 
-  // If a card has an attachment, add it as an image in the descriotion markdown
-  await contextCards.forEach(async (card) => {
-
-    if(card.badges.attachments) {
-      const trelloAttachmentsUrl = TRELLO_API_ATTACHMENTS.replace("TRELLO_CARD_ID", card.id)
-
-      await fetch(`${trelloAttachmentsUrl}?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(50, res)
-
-      card.desc =
-        card.desc +
-        `\n![${card.name}](${res[0].url} '${card.name}')`
-      })
-
-    }
-
+  const promises = contentCards.map(async (card) => {
+    // If a card has an attachment, add it as an image in the description markdown
+    card = await findImage(card)
+    // extract properties off of trello labels like `tag:foo`
     extractProperty(card, "tag")
     extractProperty(card, "date")
-
+    return card
   })
 
+  const promisedCards = Promise.all(promises)
+
   // return our data
-  return contextCards
+  return promisedCards
 }
